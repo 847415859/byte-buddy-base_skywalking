@@ -1,0 +1,5 @@
+com\tk\skywalking\agent\springmvc\ControllerInstrumentation.class
+com\tk\skywalking\agent\springmvc\RestControllerInstrumentation.class
+com\tk\skywalking\agent\springmvc\interceptor\SpringMvcInterceptor.class
+com\tk\skywalking\agent\springmvc\SpringMvcInstrumentation$1.class
+com\tk\skywalking\agent\springmvc\SpringMvcInstrumentation.class

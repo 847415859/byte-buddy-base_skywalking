@@ -1,0 +1,1 @@
+mysql-8.x=com.tk.skywalking.agent.mysql.MysqlInstrumentation

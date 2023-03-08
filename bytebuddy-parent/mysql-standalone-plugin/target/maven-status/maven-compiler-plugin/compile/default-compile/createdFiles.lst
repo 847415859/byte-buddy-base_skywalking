@@ -1,0 +1,4 @@
+agent\AgentDemo.class
+agent\AgentTransformer.class
+agent\ByteBuddyListener.class
+agent\MysqlInterceptor.class

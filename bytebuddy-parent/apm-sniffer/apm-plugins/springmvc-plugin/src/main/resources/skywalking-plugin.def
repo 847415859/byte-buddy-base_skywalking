@@ -1,0 +1,2 @@
+springmvc=com.tk.skywalking.agent.springmvc.ControllerInstrumentation
+springmvc=com.tk.skywalking.agent.springmvc.RestControllerInstrumentation

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <mkdir dir="D:\Develop\WorkSpace\2023\bytebuddy-parent\apm-sniffer\apm-agent/../../dist"/>
+  <copy file="D:\Develop\WorkSpace\2023\bytebuddy-parent\apm-sniffer\apm-agent\target/apm-agent-1.0-SNAPSHOT-jar-with-dependencies.jar" tofile="D:\Develop\WorkSpace\2023\bytebuddy-parent\apm-sniffer\apm-agent/../../dist/apm-agent-1.0-SNAPSHOT-jar-with-dependencies.jar" overwrite="true"/>
+  <mkdir dir="D:\Develop\WorkSpace\2023\bytebuddy-parent\apm-sniffer\apm-agent/../../dist/plugins"/>
+</target>
+</project>

@@ -1,0 +1,4 @@
+com\tk\skywalking\agent\AgentTransformer.class
+com\tk\skywalking\agent\AgentDemo.class
+com\tk\skywalking\agent\SpringMvcInterceptor.class
+com\tk\skywalking\agent\ByteBuddyListener.class

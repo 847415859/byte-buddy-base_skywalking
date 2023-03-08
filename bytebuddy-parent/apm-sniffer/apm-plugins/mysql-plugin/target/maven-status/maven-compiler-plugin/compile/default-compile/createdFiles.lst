@@ -1,0 +1,3 @@
+com\tk\skywalking\agent\mysql\MysqlInstrumentation$1.class
+com\tk\skywalking\agent\mysql\intercepter\MysqlInterceptor.class
+com\tk\skywalking\agent\mysql\MysqlInstrumentation.class

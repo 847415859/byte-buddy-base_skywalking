@@ -1,0 +1,4 @@
+com\tk\bytebuddy\instrument\AgentDemo.class
+com\tk\bytebuddy\instrument\AgentTransformer.class
+com\tk\bytebuddy\instrument\ByteBuddyListener.class
+com\tk\bytebuddy\instrument\SpringMvcInterceptor.class
