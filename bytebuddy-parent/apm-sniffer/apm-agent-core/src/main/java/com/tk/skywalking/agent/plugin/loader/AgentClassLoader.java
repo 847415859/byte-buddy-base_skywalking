@@ -42,6 +42,7 @@ public class AgentClassLoader extends ClassLoader{
         super(parent);
         // 获取agent.jar的目录
         File agentJarDir = AgentPackagePath.getPath();
+        // 获取agent.jar的目录下的plugins目录
         classpath = new LinkedList<>();
         classpath.add(new File(agentJarDir,"plugins"));
     }

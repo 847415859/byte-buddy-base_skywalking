@@ -16,4 +16,30 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+
+    <build>
+        <plugins>
+            <!--  创建指定目录并拷贝jar包到指定目录    -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <!-- 在package阶段创建/dist、/dist/plugins、拷贝agent.jar到/dist下  -->
+                    <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy file="${project.build.directory}/springmvc-plugin-1.0-SNAPSHOT.jar" tofile="${project.basedir}/../../../dist/plugins/springmvc-plugin-1.0-SNAPSHOT.jar" overwrite="true" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

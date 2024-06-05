@@ -18,6 +18,11 @@ public class HelloController {
 
     @GetMapping("say")
     public String say(String username){
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return helloService.say(username);
     }
 }

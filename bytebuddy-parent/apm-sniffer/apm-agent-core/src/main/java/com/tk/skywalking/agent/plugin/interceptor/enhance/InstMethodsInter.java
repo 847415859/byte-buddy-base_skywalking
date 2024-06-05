@@ -36,7 +36,7 @@ public class InstMethodsInter {
             @AllArguments Object[] allArguments,
             @SuperCall Callable<?> zuper) throws Throwable{
         EnhancedInstance instance = (EnhancedInstance) obj;
-        log.info("InstMethodsInter intercept handle  obj:{}  method :{}",obj,method);
+        log.info("InstMethodsInter intercept handle obj:{} method:{} argument:{}", obj, method, allArguments);
         // 处理前置通知
         try {
             interceptor.beforeMethod(instance,method,allArguments,method.getParameterTypes());

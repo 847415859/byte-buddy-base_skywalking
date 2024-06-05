@@ -9,7 +9,7 @@ import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 
 /**
- * @Description:  在Skywalking源码中基本上说有插件都要直接或间接的继承该类
+ * @Description:  在Skywalking源码中基本上说有插件都要直接或间接的继承该类 (skywalking的顶级父类)
  * @Date : 2023/03/06 10:08
  * @Auther : tiankun
  */
@@ -48,11 +48,14 @@ public abstract class AbstractClassEnhancePluginDefine {
      * @return
      */
     public DynamicType.Builder<?> define(TypeDescription typeDescription, DynamicType.Builder<?> builder, ClassLoader classLoader,EnhanceContext enhanceContext){
-        // com.tk.skywalking.agent.mysql.MysqlInstrumentation
+        // com.tk.skywalking.agent.springmvc.RestControllerInstrumentation
+        // 获取插件插桩类（具体的 Instrumentation）
         String pluginDefineClassName = this.getClass().getName();
+        // com.tk.app.controller.UserController
+        // 需要增强的类
         String typeName = typeDescription.getTypeName();
         log.info("开始使用{}增强{}",pluginDefineClassName,typeName);
-        DynamicType.Builder<?> newBuilder = this.enhance(typeDescription,builder,classLoader,enhanceContext);
+        DynamicType.Builder<?> newBuilder = this.enhance(typeDescription, builder, classLoader, enhanceContext);
         // 设置为已进行增强处理
         enhanceContext.initializationStageCompleted();
         log.info("使用{}增强{}结束",pluginDefineClassName,typeName);

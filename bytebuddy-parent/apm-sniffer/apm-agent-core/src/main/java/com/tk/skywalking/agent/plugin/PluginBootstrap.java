@@ -21,6 +21,7 @@ public class PluginBootstrap {
      */
     public List<AbstractClassEnhancePluginDefine> loadPlugins() {
         AgentClassLoader.initDefaultLoader();
+        // 获取插件.def 文件,并解析，最终通过我们自己创建的加载器 AgentClassLoader 加载插件
         PluginResourcesResolver resourcesResolver = new PluginResourcesResolver();
         List<URL> resources = resourcesResolver.getResources();
         if (resources == null || resources.size() == 0) {
@@ -36,7 +37,7 @@ public class PluginBootstrap {
         }
         List<PluginDefine> pluginClassList = PluginCfg.INSTANCE.getPluginClassList();
         log.info("loaded Plugin Class : {}",pluginClassList);
-        // 拿到全类名通过反射获取到对象,这个对象就是插件定义对象
+        // 拿到全类名通过反射获取到对象，这个对象就是插件定义对象
         List<AbstractClassEnhancePluginDefine> plugins = new ArrayList<>();
         for (PluginDefine pluginDefine : pluginClassList) {
             try {

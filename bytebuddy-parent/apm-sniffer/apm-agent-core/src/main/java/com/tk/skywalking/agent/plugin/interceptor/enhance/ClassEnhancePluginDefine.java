@@ -9,9 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.implementation.FieldAccessor;
-import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.SuperMethodCall;
+import net.bytebuddy.implementation.*;
 import net.bytebuddy.jar.asm.Opcodes;
 import net.bytebuddy.matcher.ElementMatcher;
 
@@ -47,7 +45,7 @@ public abstract class ClassEnhancePluginDefine extends AbstractClassEnhancePlugi
      */
     @Override
     protected DynamicType.Builder<?> enhanceClass(TypeDescription typeDescription, DynamicType.Builder<?> builder, ClassLoader classLoader) {
-        log.info("增强静态方法");
+        log.info("增强静态方法...");
         StaticMethodsInterceptorPoint[] staticMethodsInterceptorPoints = getStaticeMethodsInterceptorPoints();
         if (staticMethodsInterceptorPoints == null || staticMethodsInterceptorPoints.length == 0) {
             return builder;
@@ -91,10 +89,11 @@ public abstract class ClassEnhancePluginDefine extends AbstractClassEnhancePlugi
         if (!existConstructorInterceptorPoint && !existInstanceMethodInterceptorPoint) {
             return builder;
         }
+
         /*
             为字节码新增属性,对于同一个typeDescription只需要执行一次
          */
-        // typeDescription 不是 EnhancedInstance的实现类为真
+        // typeDescription 不是 EnhancedInstance的实现类为真，没有扩展过，则添加属性
         if (!typeDescription.isAssignableTo(EnhancedInstance.class)) {
             if (!enhanceContext.isObjectExtended()) {
                 builder = builder.defineField(CONTEXT_ATTR_NAME,Object.class, Opcodes.ACC_PRIVATE | Opcodes.ACC_VOLATILE)
@@ -118,7 +117,7 @@ public abstract class ClassEnhancePluginDefine extends AbstractClassEnhancePlugi
                 ElementMatcher<MethodDescription> constructorMatcher = constructorMethodsInterceptorPoint.getMethodsMatcher();
 
                 builder = builder.constructor(constructorMatcher)
-                        .intercept(SuperMethodCall.INSTANCE.andThen(
+                        .intercept(SuperMethodCall.INSTANCE.andThen(    // 目标方法调用完之后执行（先对实例创建完）
                                 MethodDelegation.withDefaultConfiguration()
                                         .to(new ConstructorInter(constructorInterceptor,classLoader))
                         ));

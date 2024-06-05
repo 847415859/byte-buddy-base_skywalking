@@ -10,10 +10,43 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mysql-plugin</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <build>
+        <plugins>
+            <!--  创建指定目录并拷贝jar包到指定目录    -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <!-- 在package阶段创建/dist、/dist/plugins、拷贝agent.jar到/dist下  -->
+                    <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy file="${project.build.directory}/mysql-plugin-1.0-SNAPSHOT.jar" tofile="${project.basedir}/../../../dist/plugins/mysql-plugin-1.0-SNAPSHOT.jar" overwrite="true" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

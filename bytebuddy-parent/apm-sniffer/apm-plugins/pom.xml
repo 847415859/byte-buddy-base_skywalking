@@ -26,7 +26,8 @@
             <groupId>com.tk</groupId>
             <artifactId>apm-agent-core</artifactId>
             <version>${project.version}</version>
-            <!-- apm-plugins模块只有编译的时候需要用到core模块，运行时不需要，
+            <!--
+                apm-plugins模块只有编译的时候需要用到core模块，运行时不需要，
                 因为core模块在运行时已经被apm-agent模块依赖
              -->
             <scope>provided</scope>

@@ -44,11 +44,12 @@ public class SkywalkingAgent {
             log.error("初始化失败：{}",e);
             return;
         }
+
         // 设置是否需要检验字节码，默认是
         ByteBuddy byteBuddy = new ByteBuddy().with(TypeValidation.ENABLED);
         AgentBuilder builder = new AgentBuilder.Default(byteBuddy)
-                .type(pluginFinder.buildMatch())
-                .transform(new Transformer(pluginFinder));
+                .type(pluginFinder.buildMatch())            // 匹配到符合条件的类
+                .transform(new Transformer(pluginFinder));  // 自定义的转换器
         builder.installOn(instrumentation);
     }
 
@@ -66,12 +67,14 @@ public class SkywalkingAgent {
                                                 ClassLoader classLoader,
                                                 JavaModule module, ProtectionDomain protectionDomain) {
             log.info("actualName to transform:{}", typeDescription.getActualName());
+            // 获取当前类是否需要被增强
             List<AbstractClassEnhancePluginDefine> pluginDefines = pluginFinder.find(typeDescription);
             log.info("获取到插件定义为：{}",pluginDefines);
             if (pluginDefines.size() > 0) {
                 DynamicType.Builder<?> newBuilder = builder;
                 EnhanceContext context = new EnhanceContext();
                 for (AbstractClassEnhancePluginDefine pluginDefine : pluginDefines) {
+                    // 增强类
                     DynamicType.Builder<?> possibleNewBuilder = pluginDefine.define(typeDescription,newBuilder,classLoader,context);
                     if (possibleNewBuilder != null) {
                         newBuilder = possibleNewBuilder;
@@ -82,7 +85,7 @@ public class SkywalkingAgent {
                 }
                 return newBuilder;
             }
-            log.debug("匹配到了类:{},但是未find到插件集合",typeDescription.getActualName());
+            log.debug("匹配到了类:{}, 但是未find到插件集合",typeDescription.getActualName());
             return builder;
 
 //            DynamicType.Builder<?> newBuilder = builder

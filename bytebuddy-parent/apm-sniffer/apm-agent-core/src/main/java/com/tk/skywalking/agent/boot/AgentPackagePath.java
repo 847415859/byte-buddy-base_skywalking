@@ -31,18 +31,17 @@ public class AgentPackagePath {
     private static File findPath() {
         // com/roadjava/skywalking/demo/apm/agent/core/boot/AgentPackagePath.class
         String classResourcePath = AgentPackagePath.class.getName().replaceAll("\\.", "/") + ".class";
-        // file:/E:/ideaProjects2/skywalking-demo/apm-sniffer/apm-agent-core/target/classes/com/roadjava/skywalking/demo/apm/agent/core/boot/AgentPackagePath.class
-        // jar:file:/D:/IdeaProjects/skywalking-demo/skywalking-demo-dist/apm-agent-1.0-SNAPSHOT-jar-with-dependences.jari!/com/roadjava/skywalking/demo/apm/agent/core/boot/AgentPackagePath.class
         URL resource = ClassLoader.getSystemClassLoader().getResource(classResourcePath);
+        // jar:file:/D:/Studynotes/self-study/ssjava/24.APM/Skywalking/SourceCode/byte-buddy-base_skywalking/bytebuddy-parent/dist/apm-agent-1.0-SNAPSHOT-jar-with-dependencies.jar!/com/tk/skywalking/agent/boot/AgentPackagePath.class
         if (resource != null) {
             String urlString = resource.toString();
 
             log.info("The beacon class location is {}.", urlString);
-
+            // 判断是否是jar包
             boolean isInJar = urlString.indexOf('!') > -1;
 
             if (isInJar) {
-                // /D:/IdeaProjects/skywalking-demo/skywalking-demo-dist/apm-agent-1.0-SNAPSHOT-jar-with-dependencies.jar
+                // /D:/Studynotes/self-study/ssjava/24.APM/Skywalking/SourceCode/byte-buddy-base_skywalking/bytebuddy-parent/dist/apm-agent-1.0-SNAPSHOT-jar-with-dependencies.jar
                 urlString = StringUtils.substringBetween(urlString,"file:","!");
                 File agentJarFile = null;
                 try {

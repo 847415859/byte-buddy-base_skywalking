@@ -4,7 +4,7 @@ import com.tk.skywalking.agent.plugin.match.ClassAnnotationNameMatch;
 import com.tk.skywalking.agent.plugin.match.ClassMatch;
 
 /**
- * @Description: Controller
+ * @Description: 拦截@Controller的类
  * @Date : 2023/03/08 9:11
  * @Auther : tiankun
  */

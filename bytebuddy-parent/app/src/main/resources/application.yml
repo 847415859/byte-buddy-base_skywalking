@@ -1,0 +1,19 @@
+server:
+    port: 8099
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 132714
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+
+
+logging:
+  level:
+    com.tk: debug
+

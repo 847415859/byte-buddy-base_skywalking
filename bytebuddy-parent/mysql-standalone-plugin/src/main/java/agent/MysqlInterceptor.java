@@ -1,5 +1,7 @@
 package agent;
 
+import com.alibaba.fastjson2.JSON;
+import com.mysql.cj.jdbc.ClientPreparedStatement;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.*;
 
@@ -23,10 +25,18 @@ public class MysqlInterceptor {
             @AllArguments Object[] targetMethodArgs,
             @SuperCall Callable<?> zuper
     ) {
-        log.info("before mysql exec,methodName:{},args:{}",targetMethod.getName(), Arrays.toString(targetMethodArgs));
         long start = System.currentTimeMillis();
         Object call = null;
         try {
+            log.info("targetObj :{}", targetObj);
+            ClientPreparedStatement clientPreparedStatement = (ClientPreparedStatement) targetObj;
+            log.info("preparedSql :{}", clientPreparedStatement.getPreparedSql());
+            log.info("current database :{}",clientPreparedStatement.getCurrentDatabase());
+            log.info("executeTime :{}", clientPreparedStatement.getExecuteTime() + "");
+            log.info("maxRows: {}", clientPreparedStatement.getMaxRows() + "");
+            log.info("queryBiddings: {}" , JSON.toJSONString(clientPreparedStatement.getQueryBindings()));
+            log.info("before mysql exec,methodName:{},args:{}",targetMethod.getName(), Arrays.toString(targetMethodArgs));
+
             call = zuper.call();
             log.info("after mysql exec,result:{}",call);
         }catch (Exception e) {

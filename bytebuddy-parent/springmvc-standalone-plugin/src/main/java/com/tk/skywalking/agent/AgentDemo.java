@@ -2,6 +2,7 @@ package com.tk.skywalking.agent;
 
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.matcher.ElementMatchers;
 
 import java.lang.instrument.Instrumentation;
 
@@ -25,6 +26,8 @@ public class AgentDemo {
      */
     public static void premain(String args, Instrumentation instrumentation){
         log.info("进入到premain, args：{}",args);
+        AgentBuilder.Default agentBuilder = new AgentBuilder.Default();
+
         AgentBuilder builder = new AgentBuilder.Default()
                 // 配置忽略拦截的包
                 .ignore(nameStartsWith("net.bytebuddy")

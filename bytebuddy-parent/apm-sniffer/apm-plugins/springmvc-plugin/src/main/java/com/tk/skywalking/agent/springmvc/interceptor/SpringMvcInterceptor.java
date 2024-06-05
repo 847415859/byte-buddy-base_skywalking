@@ -18,11 +18,13 @@ import java.util.concurrent.Callable;
 public class SpringMvcInterceptor implements InstanceMethodsAroundInterceptor {
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] parameterTypes) {
+        log.info("[spring-mvc] objInst :{}", objInst);
         log.info("before springmvc method name:{},args:{}",method.getName(), Arrays.toString(allArguments));
     }
 
     @Override
     public Object afterMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] parameterTypes, Object ret) {
+        log.info("[spring-mvc] objInst :{}", objInst);
         log.info("springmvc result:{}",ret);
         return ret;
     }

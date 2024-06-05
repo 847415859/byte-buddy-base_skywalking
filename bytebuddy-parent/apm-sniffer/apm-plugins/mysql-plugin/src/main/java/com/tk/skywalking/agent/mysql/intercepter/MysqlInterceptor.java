@@ -1,5 +1,6 @@
 package com.tk.skywalking.agent.mysql.intercepter;
 
+import com.mysql.cj.jdbc.ClientPreparedStatement;
 import com.tk.skywalking.agent.plugin.interceptor.enhance.EnhancedInstance;
 import com.tk.skywalking.agent.plugin.interceptor.enhance.InstanceMethodsAroundInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,9 @@ public class MysqlInterceptor implements InstanceMethodsAroundInterceptor {
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] parameterTypes) {
         // sql语句
-        objInst.setSkyWalkingDynamicField("select * from user = ?");
-        log.info("before mysql method name:{},args:{}",method.getName(), Arrays.toString(allArguments));
+        ClientPreparedStatement preparedStatement = (ClientPreparedStatement) objInst;
+        objInst.setSkyWalkingDynamicField(objInst);
+        log.info("before mysql instance: {}, method name:{},args:{}",objInst,  method.getName(), Arrays.toString(allArguments));
     }
 
     @Override
@@ -28,6 +30,7 @@ public class MysqlInterceptor implements InstanceMethodsAroundInterceptor {
         log.info("mysql result:{}",ret);
         // sql语句发送到oap
         Object skyWalkingDynamicField = objInst.getSkyWalkingDynamicField();
+        log.debug("获取到的执行结果：{}", skyWalkingDynamicField);
         return ret;
     }
 

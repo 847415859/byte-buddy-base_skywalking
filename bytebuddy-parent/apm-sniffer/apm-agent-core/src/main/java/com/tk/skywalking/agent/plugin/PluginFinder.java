@@ -32,10 +32,11 @@ public class PluginFinder {
     private final List<AbstractClassEnhancePluginDefine> signatureMatchDefine = new ArrayList<>();
     /**
      * 对插件进行分类
-     * @param plugins 加载到的所有的插件
+     * @param plugins   加载到的所有的插件
      */
     public PluginFinder(List<AbstractClassEnhancePluginDefine> plugins) {
         for (AbstractClassEnhancePluginDefine plugin : plugins) {
+            // 获取到插件的增强类
             ClassMatch classMatch = plugin.getEnhanceClass();
             if (classMatch == null) {
                 continue;
@@ -56,6 +57,7 @@ public class PluginFinder {
      * @return  plugin1_junction.or(plugin2_junction).or(plugin3_junction)
      */
     public ElementMatcher<? super TypeDescription> buildMatch() {
+        // 判断类名称是否匹配
         ElementMatcher.Junction<? super TypeDescription> junction = new ElementMatcher.Junction.AbstractBase<NamedElement>() {
             @Override
             public boolean matches(NamedElement target) {
@@ -65,6 +67,7 @@ public class PluginFinder {
         };
         // 只增强类,排除接口
         junction = junction.and(not(isInterface()));
+        // IndirectMatch
         for (AbstractClassEnhancePluginDefine pluginDefine : signatureMatchDefine) {
             ClassMatch classMatch = pluginDefine.getEnhanceClass();
             if (classMatch instanceof IndirectMatch) {

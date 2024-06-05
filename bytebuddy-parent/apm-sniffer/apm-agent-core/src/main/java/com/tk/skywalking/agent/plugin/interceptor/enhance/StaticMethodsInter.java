@@ -2,6 +2,7 @@ package com.tk.skywalking.agent.plugin.interceptor.enhance;
 
 import com.tk.skywalking.agent.plugin.loader.InterceptorInstanceLoader;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.MethodCall;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
@@ -38,6 +39,7 @@ public class StaticMethodsInter {
             @Origin Method method,
             @AllArguments Object[] allArguments,
             @SuperCall Callable<?> zuper) throws Throwable{
+        log.debug("class {} before exec static method {}, arguments :{}",clazz,method.getName(), allArguments);
         // 处理前置通知
         try {
             interceptor.beforeMethod(clazz,method,allArguments,method.getParameterTypes());
